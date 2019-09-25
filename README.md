@@ -4,6 +4,7 @@
 
 [![app:slack](https://img.shields.io/badge/app-Slack-611f69.svg)](https://slack.com)
 [![technology: Google Cloud Platform](https://img.shields.io/badge/technology-Google_Cloud_Platform-1a73e8.svg)](https://cloud.google.com)
+[![Build Status](https://travis-ci.com/FranzDiebold/where-is-rudi.svg?branch=master)](https://travis-ci.com/FranzDiebold/where-is-rudi)
 [![license: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](./LICENSE.md)
 
 ## Usage
