@@ -18,9 +18,8 @@ USER_ID_TO_GATHER_INFORMATION_FROM = os.environ['USER_ID']
 DOG_NAME = os.environ.get('DOG_NAME', DEFAULT_DOG_NAME)
 
 
-def gather_information():
-    """Triggered from a message on a Cloud Pub/Sub topic.
-    """
+def gather_information() -> None:
+    """Triggered from a message on a Cloud Pub/Sub topic."""
     print('Gathering information...')
 
     SLACK_CLIENT.chat_postMessage(

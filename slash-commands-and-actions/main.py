@@ -2,6 +2,7 @@
 """
 
 import os
+from typing import Dict, Optional, Any, Tuple
 import json
 from datetime import datetime
 from flask import jsonify
@@ -20,12 +21,12 @@ LOCAL_TIMEZONE_STRING = os.environ.get('TIMEZONE', DEFAULT_TIMEZONE)
 DOG_NAME = os.environ.get('DOG_NAME', DEFAULT_DOG_NAME)
 
 
-def _verify_web_hook(form):
+def _verify_web_hook(form: Dict[str, Any]) -> None:
     if not form or form.get('token') != SLACK_TOKEN:
         raise ValueError('Invalid request/credentials!')
 
 
-def _format_slack_message(text):
+def _format_slack_message(text: str) -> Dict[str, str]:
     message = {
         'response_type': 'in_channel',
         'text': text,
@@ -34,7 +35,7 @@ def _format_slack_message(text):
     return message
 
 
-def _get_information():
+def _get_information() -> Optional[bool]:
     firestore_client = firestore.Client()
     day_dict = firestore_client \
         .collection(FIRESTORE_COLLECTION_NAME) \
@@ -44,7 +45,7 @@ def _get_information():
     return day_dict.get('in_office')
 
 
-def _set_information(in_office):
+def _set_information(in_office: bool) -> None:
     firestore_client = firestore.Client()
     day_dict = {
         u'in_office': in_office
@@ -55,12 +56,12 @@ def _set_information(in_office):
         .set(day_dict)
 
 
-def _now():
+def _now() -> datetime:
     local_tz = timezone(LOCAL_TIMEZONE_STRING)
     return datetime.now().astimezone(local_tz)
 
 
-def _relevant_document_id():
+def _relevant_document_id() -> str:
     return _now().strftime('%Y-%m-%d')
 
 
@@ -87,7 +88,7 @@ def slash_command(request):
     return jsonify(response)
 
 
-def action(request):
+def action(request: Dict[str, Any]) -> Tuple[str, int]:
     """Triggered from Slack action via an HTTPS endpoint.
     Args:
          request (dict): Request payload.
