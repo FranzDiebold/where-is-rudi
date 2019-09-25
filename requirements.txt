@@ -1,0 +1,2 @@
+-r gather-information/requirements.txt
+-r slash-commands-and-actions/requirements.txt
