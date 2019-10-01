@@ -157,3 +157,11 @@ crashlytics-build.properties
 fabric.properties
 
 .vscode/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+deployment/account.json
+deployment/*.zip

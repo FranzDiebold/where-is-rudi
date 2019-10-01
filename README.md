@@ -22,17 +22,40 @@ You will get a message every (working day) morning to ask you whether you bring 
 ![WhereIsRudi architecture](./images/WhereIsRudi_architecture.jpg)
 
 
-## Installation
+## Installation/Deployment
 
-### Google Cloud Platform
+For easier deployment, the infrastructure as code software tool [Terraform](https://www.terraform.io/) is used.
 
-In [Google Cloud Platform console](https://console.cloud.google.com) configure the following:
+#### Preparations
+
+1. Install Terraform: [https://learn.hashicorp.com/terraform/getting-started/install.html](https://learn.hashicorp.com/terraform/getting-started/install.html)
+2. Run preparation script:
+    1. Run `prepare_gcp.sh`: `bash prepare_gcp.sh`. You may run this in the [Google Cloud Shell editor](https://ssh.cloud.google.com/cloudshell/editor). This will:
+        - Create a Google Cloud Platform project.
+        - Create Service Account and bind the roles `roles/owner`, `roles/iam.serviceAccountUser`, `roles/storage.admin`, `roles/appengine.appAdmin`, `roles/cloudscheduler.admin`, `roles/pubsub.editor` and `roles/cloudfunctions.developer`.
+        - Create new private key for the Service Account and save in the file `account.json`.
+        - Enable the Google Cloud Platform APIs `appengine`, `cloudfunctions` and `cloudscheduler`.
+    2. Copy the file `account.json` into the `deployment` folder.
+3. You may need to enable billing for the created project.
+
+#### Deployment
+
+1. Commands need to be run in `deployment` folder: `cd /deployment`
+2. Initialize the Terraform working directory: `terraform init`
+3. Generate and show the Terraform execution plan: `terraform plan`
+4. Build the infrastructure: `terraform apply` and confirm with `yes`
+
+To destroy/delete the infrastructure: `terraform destroy` and confirm with `yes`
+
+### Google Cloud Platform Resources
+
+The following [Google Cloud Platform](https://console.cloud.google.com) resources are created via Terraform:
 
 #### Google Cloud Function
 
 ![Google Cloud Functions](./images/google-cloud-functions.png)
 
-Create the three cloud functions with environment variables:
+Three cloud functions with environment variables:
 - `gather-information` (triggered by Google Pub/Sub topic `gather-information-schedule`)
     - `SLACK_API_TOKEN`: Slack App *OAuth Access Token* (starting with `xoxp-`)
     - `USER_ID`: Slack user id of dog owner.
@@ -41,19 +64,19 @@ Create the three cloud functions with environment variables:
 - `slack-slash-commands` (triggered by HTTP)
     - `SLACK_API_VERIFICATION_TOKEN`: Slack App Verification Token
 
-#### Google Cloud Firestore
-
-![Google Cloud Firestore](./images/google-cloud-firestore.png)
-
-Create a collection called `days`. The documents' id is the day string (i.e. `2019-09-14`). The documents only have one boolean field `in_office`.
-
 #### Google Cloud Scheduler
 
 ![Google Cloud Scheduler](./images/google-cloud-scheduler.png)
 
 Google Pub/Sub topic `gather-information-schedule` should be triggered every working day (monday - friday) at 7:30 AM.
 
-Therefore the frequency should be set to `30 7 * * 1-5`.
+Therefore the frequency is set to `30 7 * * 1-5`.
+
+#### Google Cloud Firestore
+
+![Google Cloud Firestore](./images/google-cloud-firestore.png)
+
+The cloud functions create a collection called `days`. The documents' id is the day string (i.e. `2019-09-14`). The documents only have one boolean field `in_office`.
 
 ### Slack API/App
 
