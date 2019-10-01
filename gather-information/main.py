@@ -2,6 +2,7 @@
 """
 
 import os
+from typing import Dict, Any
 import slack
 
 
@@ -18,7 +19,7 @@ USER_ID_TO_GATHER_INFORMATION_FROM = os.environ['USER_ID']
 DOG_NAME = os.environ.get('DOG_NAME', DEFAULT_DOG_NAME)
 
 
-def gather_information() -> None:
+def gather_information(event: Dict[str, Any], context: Dict[str, Any]) -> None:
     """Triggered from a message on a Cloud Pub/Sub topic."""
     print('Gathering information...')
 

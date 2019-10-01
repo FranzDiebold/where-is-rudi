@@ -5,7 +5,7 @@ import os
 from typing import Dict, Optional, Any, Tuple
 import json
 from datetime import datetime
-from flask import jsonify
+from flask import jsonify, Response
 import requests
 from pytz import timezone
 from google.cloud import firestore
@@ -65,7 +65,7 @@ def _relevant_document_id() -> str:
     return _now().strftime('%Y-%m-%d')
 
 
-def slash_command(request):
+def slash_command(request: Dict[str, Any]) -> Response:
     """Triggered from Slack slash command via an HTTPS endpoint.
     Args:
          request (dict): Request payload.
