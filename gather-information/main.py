@@ -21,6 +21,8 @@ DOG_NAME = os.environ.get('DOG_NAME', DEFAULT_DOG_NAME)
 
 def gather_information(event: Dict[str, Any], context: Dict[str, Any]) -> None:
     """Triggered from a message on a Cloud Pub/Sub topic."""
+    del event, context  # unused arguments
+
     print('Gathering information...')
 
     SLACK_CLIENT.chat_postMessage(
