@@ -30,7 +30,8 @@ apis=(
     "appengine"
     "cloudfunctions"
     "cloudscheduler"
+    "firestore"
 )
 for api in "${apis[@]}"; do
-    gcloud services enable cloudresourcemanager.googleapis.com --project="$project_id"
+    gcloud services enable "$api.googleapis.com" --project="$project_id"
 done
