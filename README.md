@@ -1,12 +1,15 @@
 # WhereIsRudi :dog:
 
-*WhereIsRudi* is an interactive [Slack](https://slack.com) app to inform your colleagues whether your dog@work is in the office today! :tada:
-
 [![app:slack](https://img.shields.io/badge/app-Slack-611f69.svg)](https://slack.com)
 [![technology: Google Cloud Platform](https://img.shields.io/badge/technology-Google_Cloud_Platform-1a73e8.svg)](https://cloud.google.com)
 [![IaC: Terraform](https://img.shields.io/badge/IaC-Terraform-5c4ee5.svg)](./deployment/main.tf)
 [![Build Status](https://travis-ci.com/FranzDiebold/where-is-rudi.svg?branch=master)](https://travis-ci.com/FranzDiebold/where-is-rudi)
 [![license: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](./LICENSE.md)
+
+<img src="./design/WhereIsRudi_logo.png" width="300px">
+
+*WhereIsRudi* is an interactive [Slack](https://slack.com) app to inform your colleagues whether your dog@work is in the office today! :tada:
+
 
 ## Usage
 
@@ -100,3 +103,7 @@ Add Interactivity request URL pointing to your Google Cloud Function `slack-acti
 #### Slash Commands
 
 Create new Slash command `/whereisrudi` with request URL pointing to your Google Cloud Function `slack-slash-commands`, i.e. `https://europe-west1-<your-project-name>.cloudfunctions.net/<your-function-name>`.
+
+## Design
+
+See [/design](./design/).
