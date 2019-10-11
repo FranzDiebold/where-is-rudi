@@ -15,11 +15,16 @@
 
 ### Colleagues
 
+![Slack Example Colleagues](./images/slack-example-colleagues.gif)
+
 Use the [Slash Command](https://api.slack.com/slash-commands) `\whereisrudi` in any channel, direct message or any other slack conversation. That's it!
 
 ### Dog Owner
 
+![Slack Example Dog Owner](./images/slack-example-dog-owner.png)
+
 You will get a message every (working day) morning to ask you whether you bring your dog to the office today. Just answer with one tap or click via the actions in the message. It's that easy!
+
 
 ## Architecture & Sequence
 
