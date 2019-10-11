@@ -89,21 +89,31 @@ The cloud functions create a entities of kind `days`. The entity id is the day s
 
 #### Slack App
 
-Create a new Slack app ([https://api.slack.com/apps](https://api.slack.com/apps)).
+Create a new Slack app in the Slack API console: [https://api.slack.com/apps](https://api.slack.com/apps).
 
 #### Bot User
+
+![Slack API Bot User](./images/slack-api-bot-user.png)
 
 Create a Bot User, i.e. `WhereIsRudi`.
 
 #### OAuth & Permissions
 
+![Slack API Permissions](./images/slack-api-permissions.png)
+
 In OAuth & Permissions in Scopes, add permission scope `chat:write:bot` and `incoming-webhook` to *Conversations* and `bot` and `commands` to *Interactivity*.
 
 #### Interactive Components
 
+![Slack API Actions](./images/slack-api-actions.png)
+
 Add Interactivity request URL pointing to your Google Cloud Function `slack-actions`. You got this URL as output from the `terraform apply` step before, named `slack_actions_function_url`.
 
 #### Slash Commands
+
+![Slack API Slash Commands 1](./images/slack-api-slash-commands-1.png)
+
+![Slack API Slash Commands 2](./images/slack-api-slash-commands-2.png)
 
 Create new Slash command `/whereisrudi` with request URL pointing to your Google Cloud Function `slack-slash-commands`. You got this URL as output from the `terraform apply` step before, named `slack_slash_commands_function_url`.
 
