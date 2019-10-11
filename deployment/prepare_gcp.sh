@@ -25,6 +25,12 @@ for role in "${roles[@]}"; do
 done
 gcloud iam service-accounts keys create --iam-account="$service_account_email" account.json
 
+echo "##########################################################"
+echo "You need to enable billing for the newly created project."
+echo "(It is needed for the Cloudscheduler API.)"
+echo "You can do this here: https://console.cloud.google.com/settings?project=$project_id"
+read -p "When you are done with that press enter to continue..."
+
 # Enable Google Cloud Platform APIs
 apis=(
     "appengine"
