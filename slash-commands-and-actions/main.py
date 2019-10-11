@@ -109,7 +109,7 @@ def action(request: Dict[str, Any]) -> Tuple[str, int]:
         True: f'{DOG_NAME} will be in the office today ({today}). :dog:',
         False: f'{DOG_NAME} will not be in the office today ({today}). :no_entry_sign:',
     }
-    data = _format_slack_message(f'Thanks for the response!' \
+    data = _format_slack_message(f'Thanks for the response! ' \
         f'I noted that {status_to_response[in_office]}')
     response = requests.post(
         response_url,
