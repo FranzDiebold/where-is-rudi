@@ -75,8 +75,8 @@ def slash_command(request: Dict[str, Any]) -> Response:
     in_office = _get_information()
     status_to_response = {
         None: f'Hm.. I don\'t know that... :man-shrugging:',
-        True: f'Yes! {DOG_NAME} :dog: is in the office today! :tada:',
-        False: f'No. {DOG_NAME} is not in the office today. :disappointed:',
+        True: f'{DOG_NAME} :dog: is in the office today! :tada:',
+        False: f'{DOG_NAME} is not in the office today. :disappointed:',
     }
     response = _format_slack_message(status_to_response[in_office])
 
