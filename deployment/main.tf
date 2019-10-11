@@ -26,11 +26,13 @@ resource "google_cloud_scheduler_job" "gather_information_schedule_job" {
     topic_name  = "${google_pubsub_topic.gather_information_schedule_topic.id}"
     data        = "${base64encode("{}")}"
   }
+
+  depends_on    = [google_app_engine_application.app]
 }
 
 # Google Storage Bucket
 resource "google_storage_bucket" "cloud_functions_code_bucket" {
-  name     = "cloud-functions-code-bucket"
+  name     = "cloud-functions-code-bucket-${var.project_name}"
   location = "${var.region}"
 }
 data "archive_file" "gather_information_archive" {
