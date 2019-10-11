@@ -2,7 +2,7 @@
 
 project_id="whereisrudi-test"
 project_name="WhereIsRudi"
-service_account_id="test3-sa"
+service_account_id="$project_id-sa"
 
 service_account_email="$service_account_id@$project_id.iam.gserviceaccount.com"
 
@@ -29,7 +29,7 @@ echo "##########################################################"
 echo "You need to enable billing for the newly created project."
 echo "(It is needed for the Cloudscheduler API.)"
 echo "You can do this here: https://console.cloud.google.com/settings?project=$project_id"
-read -p "When you are done with that press enter to continue..."
+read -p "When you are done with that press [enter] to continue..."
 
 # Enable Google Cloud Platform APIs
 apis=(

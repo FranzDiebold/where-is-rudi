@@ -28,12 +28,15 @@ You will get a message every (working day) morning to ask you whether you bring 
 
 ## Installation/Deployment
 
-For easier deployment, the infrastructure as code software tool [Terraform](https://www.terraform.io/) is used.
+For easier deployment, the *infrastructure as code* (IaC) software tool [Terraform](https://www.terraform.io/) is used.
 
 #### Preparations
 
 1. Install Terraform: [https://learn.hashicorp.com/terraform/getting-started/install.html](https://learn.hashicorp.com/terraform/getting-started/install.html)
-2. Run preparation script:
+2. Define a Google Cloud Platform (GCP) project id, i.e. `whereisrudi-<random_number>` and enter it in:
+    - [`deployment/prepare_gcp.sh`](./deployment/prepare_gcp.sh)
+    - [`deployment/variables.tf`](./deployment/variables.tf)
+3. Run preparation script:
     1. Run `prepare_gcp.sh`: `bash prepare_gcp.sh`. You may run this in the [Google Cloud Shell editor](https://ssh.cloud.google.com/cloudshell/editor). This will:
         - Create a Google Cloud Platform project.
         - Create Service Account and bind the roles `roles/owner`, `roles/iam.serviceAccountUser`, `roles/storage.admin`, `roles/appengine.appAdmin`, `roles/cloudscheduler.admin`, `roles/pubsub.editor` and `roles/cloudfunctions.developer`.
@@ -47,7 +50,7 @@ For easier deployment, the infrastructure as code software tool [Terraform](http
 1. Commands need to be run in `deployment` folder: `cd /deployment`
 2. Initialize the Terraform working directory: `terraform init`
 3. Generate and show the Terraform execution plan: `terraform plan`
-4. Build the infrastructure: `terraform apply` and confirm with `yes`
+4. Build the infrastructure: `terraform apply` and confirm with `yes`. This step will output the endpoint URLs `slack_actions_function_url` and `slack_slash_commands_function_url` that you need to enter in the Slack API console.
 
 To destroy/delete the infrastructure: `terraform destroy` and confirm with `yes`
 
@@ -98,11 +101,12 @@ In OAuth & Permissions in Scopes, add permission scope `chat:write:bot` and `inc
 
 #### Interactive Components
 
-Add Interactivity request URL pointing to your Google Cloud Function `slack-actions`.
+Add Interactivity request URL pointing to your Google Cloud Function `slack-actions`. You got this URL as output from the `terraform apply` step before, named `slack_actions_function_url`.
 
 #### Slash Commands
 
-Create new Slash command `/whereisrudi` with request URL pointing to your Google Cloud Function `slack-slash-commands`, i.e. `https://europe-west1-<your-project-name>.cloudfunctions.net/<your-function-name>`.
+Create new Slash command `/whereisrudi` with request URL pointing to your Google Cloud Function `slack-slash-commands`. You got this URL as output from the `terraform apply` step before, named `slack_slash_commands_function_url`.
+
 
 ## Design
 

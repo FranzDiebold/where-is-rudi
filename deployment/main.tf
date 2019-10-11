@@ -116,3 +116,15 @@ resource "google_cloudfunctions_function" "slack_slash_commands_function" {
     SLACK_API_VERIFICATION_TOKEN    = "${var.slack_api_verification_token}"
   }
 }
+
+output "slack_actions_function_url" {
+  value       = "https://${var.region}-${var.project_name}.cloudfunctions.net/${google_cloudfunctions_function.slack_actions_function.name}"
+  description = "Enter this endpoint URL in the 'Interactive Components' in the Slack API console under 'Interactivity'."
+  depends_on  = [google_cloudfunctions_function.slack_actions_function]
+}
+
+output "slack_slash_commands_function_url" {
+  value       = "https://${var.region}-${var.project_name}.cloudfunctions.net/${google_cloudfunctions_function.slack_slash_commands_function.name}"
+  description = "Enter this endpoint URL in the 'Slash Commands' in the Slack API console."
+  depends_on  = [google_cloudfunctions_function.slack_slash_commands_function]
+}
