@@ -8,13 +8,12 @@ from datetime import datetime
 from flask import jsonify, Response
 import requests
 from pytz import timezone
-from google.cloud import firestore
+from google.cloud import datastore
 
 
 DEFAULT_DOG_NAME = 'Rudi'
 DEFAULT_TIMEZONE = 'Europe/Berlin'
-FIRESTORE_COLLECTION_NAME = u'days'
-
+DATASTORE_KIND_NAME = u'days'
 
 SLACK_TOKEN = os.environ['SLACK_API_VERIFICATION_TOKEN']
 LOCAL_TIMEZONE_STRING = os.environ.get('TIMEZONE', DEFAULT_TIMEZONE)
@@ -36,24 +35,20 @@ def _format_slack_message(text: str) -> Dict[str, str]:
 
 
 def _get_information() -> Optional[bool]:
-    firestore_client = firestore.Client()
-    day_dict = firestore_client \
-        .collection(FIRESTORE_COLLECTION_NAME) \
-        .document(_relevant_document_id()) \
-        .get() \
-        .to_dict() or {}
+    datastore_client = datastore.Client()
+    key = datastore_client.key(DATASTORE_KIND_NAME, _relevant_document_id())
+    day_dict = datastore_client.get(key) or {}
     return day_dict.get('in_office')
 
 
 def _set_information(in_office: bool) -> None:
-    firestore_client = firestore.Client()
-    day_dict = {
-        u'in_office': in_office
-    }
-    firestore_client \
-        .collection(FIRESTORE_COLLECTION_NAME) \
-        .document(_relevant_document_id()) \
-        .set(day_dict)
+    datastore_client = datastore.Client()
+    key = datastore_client.key(DATASTORE_KIND_NAME, _relevant_document_id())
+    day = datastore.Entity(key, exclude_from_indexes=['in_office'])
+    day.update({
+        'in_office': in_office
+    })
+    datastore_client.put(day)
 
 
 def _now() -> datetime:

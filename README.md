@@ -41,9 +41,9 @@ For easier deployment, the *infrastructure as code* (IaC) software tool [Terrafo
         - Create a Google Cloud Platform project.
         - Create Service Account and bind the roles `roles/owner`, `roles/iam.serviceAccountUser`, `roles/storage.admin`, `roles/appengine.appAdmin`, `roles/cloudscheduler.admin`, `roles/pubsub.editor` and `roles/cloudfunctions.developer`.
         - Create new private key for the Service Account and save in the file `account.json`.
-        - Enable the Google Cloud Platform APIs `appengine`, `cloudfunctions` and `cloudscheduler`.
+        - Enable the Google Cloud Platform APIs `appengine`, `cloudfunctions`, `cloudscheduler` and `datastore`.
+        - You will be asked to enable billing for the created project when running the script.
     2. Copy the file `account.json` into the `deployment` folder.
-3. You may need to enable billing for the created project.
 
 #### Deployment
 
@@ -79,11 +79,11 @@ Google Pub/Sub topic `gather-information-schedule` should be triggered every wor
 
 Therefore the frequency is set to `30 7 * * 1-5`.
 
-#### Google Cloud Firestore
+#### Google Cloud Datastore / Google Cloud Firestore Datastore Mode
 
-![Google Cloud Firestore](./images/google-cloud-firestore.png)
+![Google Cloud Datastore](./images/google-cloud-datastore.png)
 
-The cloud functions create a collection called `days`. The documents' id is the day string (i.e. `2019-09-14`). The documents only have one boolean field `in_office`.
+The cloud functions create a entities of kind `days`. The entity id is the day string (i.e. `2019-09-14`). The entities only have one boolean field `in_office`, which is not indexed.
 
 ### Slack API/App
 

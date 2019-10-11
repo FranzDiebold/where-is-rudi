@@ -1,5 +1,5 @@
 variable "project_name" {
-  default   = "test-426798456209745"
+  default   = "whereisrudi-<random_number>"
 }
 
 variable "region" {

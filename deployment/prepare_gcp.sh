@@ -1,6 +1,6 @@
 #!/bin/bash
 
-project_id="whereisrudi-test"
+project_id="whereisrudi-<random_number>"
 project_name="WhereIsRudi"
 service_account_id="$project_id-sa"
 
@@ -36,7 +36,7 @@ apis=(
     "appengine"
     "cloudfunctions"
     "cloudscheduler"
-    "firestore"
+    "datastore"
 )
 for api in "${apis[@]}"; do
     gcloud services enable "$api.googleapis.com" --project="$project_id"
