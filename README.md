@@ -3,7 +3,7 @@
 [![app:slack](https://img.shields.io/badge/app-Slack-611f69.svg)](https://slack.com)
 [![technology: Google Cloud Platform](https://img.shields.io/badge/technology-Google_Cloud_Platform-1a73e8.svg)](https://cloud.google.com)
 [![IaC: Terraform](https://img.shields.io/badge/IaC-Terraform-5c4ee5.svg)](./deployment/main.tf)
-[![Lint Status](https://github.com/FranzDiebold/where-is-rudi/workflows/Lint/badge.svg?branch=master)](https://github.com/FranzDiebold/where-is-rudi/actions?query=workflow%3A%22Lint%22)
+[![Lint Status](https://github.com/FranzDiebold/where-is-rudi/workflows/Lint/badge.svg)](https://github.com/FranzDiebold/where-is-rudi/actions?query=workflow%3A%22Lint%22)
 [![license: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](./LICENSE.md)
 
 <img src="./design/WhereIsRudi_logo.png" width="300px">
