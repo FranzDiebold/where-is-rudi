@@ -5,6 +5,7 @@ import os
 from typing import Dict, Optional, Any, Tuple
 import json
 from datetime import datetime
+
 from flask import jsonify, Response
 import requests
 from pytz import timezone
@@ -68,6 +69,8 @@ def slash_command(request: Dict[str, Any]) -> Response:
     if request.method != 'POST':
         return 'Only POST requests are accepted', 405
 
+    print('Triggered Slack slash command.')
+
     form = request.form
 
     _verify_web_hook(form)
@@ -78,7 +81,10 @@ def slash_command(request: Dict[str, Any]) -> Response:
         True: f'{DOG_NAME} :dog: is in the office today! :tada:',
         False: f'{DOG_NAME} is not in the office today. :disappointed:',
     }
-    response = _format_slack_message(status_to_response[in_office])
+    response_text = status_to_response[in_office]
+    response = _format_slack_message(response_text)
+
+    print(f'Replying with "{response_text}".')
 
     return jsonify(response)
 
@@ -90,6 +96,8 @@ def action(request: Dict[str, Any]) -> Tuple[str, int]:
     """
     if request.method != 'POST':
         return 'Only POST requests are accepted', 405
+
+    print('Triggered Slack action.')
 
     form = json.loads(request.form.get('payload', ''))
 
@@ -109,13 +117,17 @@ def action(request: Dict[str, Any]) -> Tuple[str, int]:
         True: f'{DOG_NAME} will be in the office today ({today}). :dog:',
         False: f'{DOG_NAME} will not be in the office today ({today}). :no_entry_sign:',
     }
-    data = _format_slack_message(f'Thanks for the response! ' \
-        f'I noted that {status_to_response[in_office]}')
-    response = requests.post(
+    response_text = f'Thanks for the response! I noted that {status_to_response[in_office]}'
+    response = _format_slack_message(response_text)
+
+    print(f'Replying with "{response_text}".')
+
+    response_obj = requests.post(
         response_url,
-        data=json.dumps(data),
+        data=json.dumps(response),
         headers={'Content-Type': 'application/json'}
     )
-    print(response.text)
+
+    print(f'Slack POST request status code: "{response_obj.status_code}".')
 
     return '', 200
