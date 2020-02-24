@@ -31,7 +31,17 @@ You will get a message every (working day) morning to ask you whether you bring 
 ![WhereIsRudi architecture](./images/WhereIsRudi_architecture.jpg)
 
 
-## Installation/Deployment
+## Linting
+
+Local linting may be done using the Makefile:
+
+```shell
+make install
+make lint
+```
+
+
+## Deployment
 
 For easier deployment, the *infrastructure as code* (IaC) software tool [Terraform](https://www.terraform.io/) is used.
 
